@@ -210,7 +210,7 @@ CREATE TABLE DataPointRecord(
     MeasurementRecordID INT NOT NULL,
     CONSTRAINT PK_DataPointRecord PRIMARY KEY (HospitalNumber, CategoryID, MeasurementID, DataPointNumber),
     CONSTRAINT FK_DataPointRecord_DataPoint FOREIGN KEY (MeasurementID, DataPointNumber) REFERENCES DataPoint (MeasurementID, DataPointNumber),
-    CONSTRAINT FK_DataPointRecord_MeasurementRecord FOREIGN KEY (MeasurementRecordID, MeasurementID, CategoryID, HospitalNumber) REFERENCES MeasurementRecord (MeasurementRecordID, MeasurementID, CategoryID, HospitalNumber)
+    CONSTRAINT FK_DataPointRecord_MeasurementRecord FOREIGN KEY (MeasurementRecordID) REFERENCES MeasurementRecord (MeasurementRecordID)
 )
 
 GO
