@@ -193,7 +193,7 @@ CREATE TABLE MeasurementRecord(
     DateTimeRecorded DATETIME NOT NULL,
     MeasurementID INT NOT NULL,
     CategoryID INT NOT NULL,
-    HospitalNumber NVARCHAR(50) NOT NULL
+    HospitalNumber NVARCHAR(50) NOT NULL,
     CONSTRAINT PK_MeasurementRecord PRIMARY KEY (MeasurementRecordID),
     CONSTRAINT UQ_MeasurementRecord UNIQUE(DateTimeRecorded, MeasurementID, CategoryID, HospitalNumber),
     CONSTRAINT FK_MeasurementRecord_PatientMeasurement FOREIGN KEY (MeasurementID, CategoryID, HospitalNumber) REFERENCES PatientMeasurement (MeasurementID, CategoryID, HospitalNumber)
