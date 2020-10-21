@@ -194,7 +194,8 @@ CREATE TABLE MeasurementRecord(
     MeasurementID INT NOT NULL,
     CategoryID INT NOT NULL,
     HospitalNumber NVARCHAR(50) NOT NULL,
-    CONSTRAINT PK_MeasurementRecord PRIMARY KEY (MeasurementRecordID, MeasurementID, CategoryID, HospitalNumber),
+    CONSTRAINT PK_MeasurementRecord PRIMARY KEY (MeasurementRecordID),
+    CONSTRAINT UQ_MeasurementRecord UNIQUE(DateTimeRecorded, MeasurementID, CategoryID, HospitalNumber),
     CONSTRAINT FK_MeasurementRecord_PatientMeasurement FOREIGN KEY (MeasurementID, CategoryID, HospitalNumber) REFERENCES PatientMeasurement (MeasurementID, CategoryID, HospitalNumber)
 )
 
@@ -209,7 +210,7 @@ CREATE TABLE DataPointRecord(
     MeasurementRecordID INT NOT NULL,
     CONSTRAINT PK_DataPointRecord PRIMARY KEY (HospitalNumber, CategoryID, MeasurementID, DataPointNumber),
     CONSTRAINT FK_DataPointRecord_DataPoint FOREIGN KEY (MeasurementID, DataPointNumber) REFERENCES DataPoint (MeasurementID, DataPointNumber),
-    CONSTRAINT FK_DataPointRecord_MeasurementRecord FOREIGN KEY (MeasurementRecordID, MeasurementID, CategoryID, HospitalNumber) REFERENCES MeasurementRecord (MeasurementRecordID, MeasurementID, CategoryID, HospitalNumber)
+    CONSTRAINT FK_DataPointRecord_MeasurementRecord FOREIGN KEY (MeasurementRecordID) REFERENCES MeasurementRecord (MeasurementRecordID)
 )
 
 GO
