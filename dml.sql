@@ -18,7 +18,7 @@ INSERT INTO Measurement
 VALUES('ECOG Status', 28),
     ('Breathlessness', 1),
     ('Level of Pain', 1),
-    ('Fluid Drain', 0),
+    ('Fluid Drain', 1),
     ('Quality of Life', 7);
 
 INSERT INTO DataPoint
@@ -44,15 +44,14 @@ VALUES('phone'),
 INSERT INTO [Resource]
     (Title,Prompt,Content,TypeID)
 VALUES('Pleural Nurse Clinical Consultant', '0428-167-972', '', 1),
-    ('How to perform a Visual Analogue Score', 'Click Here', '', 4),
     ('How to drain your Indwelling Pleural Catheter', 'Click Here', '', 4),
     ('Northern Health Respiratory Medicine', 'Click Here', 'https://www.nh.org.au/service/respiratory-medicine/', 3),
-    ('Indwelling Pleural Catheter Information Sheet', 'Click Here', 'IPC.pdf', 2);
+    ('Indwelling Pleural Catheter Information Sheet', 'Click Here', 'IPC.pdf', 2),
+    ('Northern Health Telehealth', 'Click Here', 'https://www.nh.org.au/telehealth/', 3);
 
 INSERT INTO ResourceDialog
     (Heading,Content,Video,ResourceID)
-VALUES('How to perform VAS score', 'Instruction: To help you to best describe how good or bad you feel on a given day, we have drawn a scale from Best on the top of the slider to Worst on the bottom of the slider. Please position the slider at the point that describes how you feel today.', NULL, 2),
-    ('How to drain your Indwelling Pleural Catheter', 'Please enter the amount of fluid you have drained today in millilitres. Enter the value in the box. <p>Below is a video which details how to perform a fluid drainage of an Indwelling Pleural Catheter.</p>', 'https://player.vimeo.com/video/270685188', 3);
+VALUES('How to drain your Indwelling Pleural Catheter', 'Please enter the amount of fluid you have drained today in millilitres. Enter the value in the box. <p>Below is a video which details how to perform a fluid drainage of an Indwelling Pleural Catheter.</p>', 'https://player.vimeo.com/video/270685188', 2);
 
 INSERT INTO RecordCategory
     (Category)
@@ -83,6 +82,10 @@ VALUES(1, '123456789'),
     (2, '987654321'),
     (3, '987654321');
 
+INSERT INTO ConditionDetails 
+(CategoryID, URNumber, Diagnosis, ProcedureDate, NextAppointment)
+VALUES(1, '123456789', 'There has been a build-up of fluid around your lungs. Therefore, it is important for us to know and monitor how you are feeling by using this app  to allow us to best optimise your care. The app will be used in hospital and in clinic during follow-up.', GETDATE(), GETDATE())
+
 INSERT INTO PatientResource
     (CategoryID,URNumber,ResourceID)
 VALUES(1, '123456789', 1),
@@ -92,7 +95,9 @@ VALUES(1, '123456789', 1),
     (1, '123456789', 5),
     (1, '987654321', 1),
     (1, '987654321', 2),
-    (1, '987654321', 3);
+    (1, '987654321', 3),
+    (1, '987654321', 4),
+    (1, '987654321', 5);
 
 INSERT INTO TemplateResource
     (CategoryID,ResourceID)
@@ -116,19 +121,19 @@ VALUES(1, 1),
     (2, 3);
 
 INSERT INTO PatientMeasurement
-    (MeasurementID,CategoryID,URNumber)
-VALUES(1, 1, '123456789'),
-    (2, 1, '123456789'),
-    (3, 1, '123456789'),
-    (4, 1, '123456789'),
-    (5, 1, '123456789'),
-    (1, 1, '987654321'),
-    (2, 1, '987654321'),
-    (3, 1, '987654321'),
-    (4, 1, '987654321'),
-    (5, 1, '987654321'),
-    (1, 2, '987654321'),
-    (2, 2, '987654321'),
-    (5, 2, '987654321'),
-    (1, 3, '987654321'),
-    (2, 3, '987654321');
+    (MeasurementID,CategoryID,URNumber,Frequency,FrequencySetDate)
+VALUES(1, 1, '123456789', 28, GETDATE()),
+    (2, 1, '123456789', 1, GETDATE()),
+    (3, 1, '123456789', 1, GETDATE()),
+    (4, 1, '123456789', 1, GETDATE()),
+    (5, 1, '123456789', 7, GETDATE()),
+    (1, 1, '987654321', 28, GETDATE()),
+    (2, 1, '987654321', 1, GETDATE()),
+    (3, 1, '987654321', 1, GETDATE()),
+    (4, 1, '987654321', 1, GETDATE()),
+    (5, 1, '987654321', 7, GETDATE()),
+    (1, 2, '987654321', 28, GETDATE()),
+    (2, 2, '987654321', 1, GETDATE()),
+    (5, 2, '987654321', 7, GETDATE()),
+    (1, 3, '987654321', 28, GETDATE()),
+    (2, 3, '987654321', 1, GETDATE());
