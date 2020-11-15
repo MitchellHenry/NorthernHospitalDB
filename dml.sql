@@ -4,54 +4,35 @@ VALUES('Admin'),
     ('Clinician');
 
 INSERT INTO Staff
-    (StaffID,FirstName,SurName,[Password],Salt,RoleID)
-VALUES('STAFFID', 'Stephen', 'Grouios', HASHBYTES('SHA2_512','password'), 'salt', 1),
-    ('STAFFID2', 'John', 'Konstantinou', HASHBYTES('SHA2_512','password'), 'salt', 2);
+    (Email,FirstName,Surname,[Password],Salt,RoleID)
+VALUES('staff@staff.com', 'Staff', 'One', HASHBYTES('SHA2_512', CONCAT('password', 'salt', 'this15myp3pper')), 'salt', 1),
+    ('staff2@staff.com', 'Staff', 'Two', HASHBYTES('SHA2_512', CONCAT('password', 'salt', 'this15myp3pper')), 'salt', 2);
 
 INSERT INTO Patient
-    (HospitalNumber,Email,Title,SurName,FirstName,Gender,DOB,[Address],Suburb,PostCode,MobileNumber,HomeNumber,CountryOfBirth,PreferredLanguage,[Password],Salt,LivesAlone,RegisteredBy,Active)
-VALUES('123456789', 'patient@patient.com', 'Mr', 'Henry', 'Mitchell', 'Male', GETDATE(), '123trump St', 'Cheltenham', '1234', '0123456789', '0123456789', 'Australia', 'English', HASHBYTES('SHA2_512','password'), 'salt', 0, 'STAFFID2', 1);
+    (URNumber,Email,Title,SurName,FirstName,Gender,DOB,[Address],Suburb,PostCode,MobileNumber,HomeNumber,CountryOfBirth,PreferredLanguage,[Password],Salt,LivesAlone,RegisteredBy,Active)
+VALUES('123456789', 'patient@patient.com', 'Mrs', 'Doe', 'Jane', 'Female', GETDATE(), '123 Evergreen Terrace', 'Springfield', '1234', '0123456789', '0123456789', 'Australia', 'English', HASHBYTES('SHA2_512', CONCAT('password', 'salt', 'this15myp3pper')), 'salt', 0, 1, 1),
+    ('987654321', 'patient2@patient.com', 'Mr', 'Doe', 'John', 'Male', GETDATE(), '123 Evergreen Terrace', 'Springfield', '1234', '0123456789', '0123456789', 'Australia', 'English', HASHBYTES('SHA2_512', CONCAT('password', 'salt', 'this15myp3pper')), 'salt', 0, 1, 1);
 
 INSERT INTO Measurement
     (MeasurementName, Frequency)
-VALUES('ECOG Status', 1),
-    ('Likert Scale', 1),
+VALUES('ECOG Status', 28),
     ('Breathlessness', 1),
     ('Level of Pain', 1),
-    ('Fluid Drain', 1),
-    ('Quality of Life', 1),
-    ('HADS', 1);
+    ('Fluid Drain', 0),
+    ('Quality of Life', 7);
 
 INSERT INTO DataPoint
     (MeasurementID,DataPointNumber,UpperLimit,LowerLimit,[Name])
 VALUES(1, 1, 4, 0, 'ECOG Status'),
-    (2, 1, 5, 1, 'Likert Scale'),
-    (3, 1, 100, 0, 'Breathlessness Input'),
-    (3, 2, 100, 0, 'Breathlessness Slider'),
-    (4, 1, 100, 0, 'Level of Pain Input'),
-    (4, 2, 100, 0, 'Level of Pain Slider'),
-    (5, 1, 600, 0, 'Fluid Drain'),
-    (6, 1, 5, 1, 'Mobility'),
-    (6, 2, 5, 1, 'Self-Care'),
-    (6, 3, 5, 1, 'Usual-Activies'),
-    (6, 4, 5, 1, 'Pain/Discomfort'),
-    (6, 5, 5, 1, 'Anxiety/Depression'),
-    (6, 6, 100, 0, 'QoL Vas Health Input'),
-    (6, 7, 100, 0, 'QoL Vas Health Slider'),
-    (7, 1, 3, 0, 'Anxiety - Tense'),
-    (7, 2, 3, 0, 'Depression - Enjoyment'),
-    (7, 3, 3, 0, 'Anxiety - Frightened awful'),
-    (7, 4, 3, 0, 'Depression - Laugh'),
-    (7, 5, 3, 0, 'Anxiety - Worrying thoughts'),
-    (7, 6, 3, 0, 'Depression - Cheerful'),
-    (7, 7, 3, 0, 'Anxiety - Relaxed'),
-    (7, 8, 3, 0, 'Depression - Slowed'),
-    (7, 9, 3, 0, 'Anxiety - Frightened butterflies'),
-    (7, 10, 3, 0, 'Depression - Appearance'),
-    (7, 11, 3, 0, 'Anxiety - Restless'),
-    (7, 12, 3, 0, 'Depression - Looking forward'),
-    (7, 13, 3, 0, 'Anxiety - Panic'),
-    (7, 14, 3, 0, 'Depression - Book/Radio/TV')
+    (2, 1, 5, 1, 'Breathlessness'),
+    (3, 1, 5, 1, 'Level of Pain'),
+    (4, 1, 600, 0, 'Fluid Drain'),
+    (5, 1, 5, 1, 'Mobility'),
+    (5, 2, 5, 1, 'Self-Care'),
+    (5, 3, 5, 1, 'Usual-Activies'),
+    (5, 4, 5, 1, 'Pain/Discomfort'),
+    (5, 5, 5, 1, 'Anxiety/Depression'),
+    (5, 6, 100, 0, 'QoL Vas Health Slider');
 
 INSERT INTO ResourceType
     (TypeName)
@@ -82,41 +63,72 @@ INSERT INTO RecordType
 VALUES('MMR', 1);
 
 INSERT INTO PatientRecord
-    (DateTimeRecorded,Notes,HospitalNumber,RecordTypeID)
+    (DateTimeRecorded,Notes,URNumber,RecordTypeID)
 VALUES(GETDATE(), 'No Notes', '123456789', 1);
 
 INSERT INTO Treating
-    (StartDate,EndDate,HospitalNumber,StaffID)
-VALUES(GETDATE(), GETDATE(), '123456789', 'STAFFID2');
+    (StartDate,EndDate,URNumber,StaffID)
+VALUES(GETDATE(), GETDATE(), '123456789', 1);
 
 INSERT INTO TemplateCategory
     (CategoryName)
-VALUES('Indwelling Pleural Catheter');
+VALUES('Indwelling Pleural Catheter'),
+    ('Asthma'),
+    ('COPD');
 
 INSERT INTO PatientCategory
-    (CategoryID,HospitalNumber)
-VALUES(1, '123456789');
+    (CategoryID,URNumber)
+VALUES(1, '123456789'),
+    (1, '987654321'),
+    (2, '987654321'),
+    (3, '987654321');
 
 INSERT INTO PatientResource
-    (CategoryID,HospitalNumber,ResourceID)
-VALUES(1, '123456789', 1);
+    (CategoryID,URNumber,ResourceID)
+VALUES(1, '123456789', 1),
+    (1, '123456789', 2),
+    (1, '123456789', 3),
+    (1, '123456789', 4),
+    (1, '123456789', 5),
+    (1, '987654321', 1),
+    (1, '987654321', 2),
+    (1, '987654321', 3);
 
 INSERT INTO TemplateResource
     (CategoryID,ResourceID)
-VALUES(1, 1);
+VALUES(1, 1),
+    (1, 2),
+    (1, 3),
+    (1, 4),
+    (1, 5);
 
 INSERT INTO TemplateMeasurement
     (MeasurementID,CategoryID)
-VALUES(1, 1);
+VALUES(1, 1),
+    (2, 1),
+    (3, 1),
+    (4, 1),
+    (5, 1),
+    (1, 2),
+    (2, 2),
+    (5, 2),
+    (1, 3),
+    (2, 3);
 
 INSERT INTO PatientMeasurement
-    (MeasurementID,CategoryID,HospitalNumber)
-VALUES(1, 1, '123456789');
-
-INSERT INTO MeasurementRecord
-    (DateTimeRecorded,MeasurementID,CategoryID,HospitalNumber)
-VALUES(GETDATE(), 1, 1, '123456789');
-
-INSERT INTO DataPointRecord
-    (HospitalNumber,CategoryID,MeasurementID,DataPointNumber,[value],MeasurementRecordID)
-VALUES('123456789', 1, 1, 1, 1, 1);
+    (MeasurementID,CategoryID,URNumber)
+VALUES(1, 1, '123456789'),
+    (2, 1, '123456789'),
+    (3, 1, '123456789'),
+    (4, 1, '123456789'),
+    (5, 1, '123456789'),
+    (1, 1, '987654321'),
+    (2, 1, '987654321'),
+    (3, 1, '987654321'),
+    (4, 1, '987654321'),
+    (5, 1, '987654321'),
+    (1, 2, '987654321'),
+    (2, 2, '987654321'),
+    (5, 2, '987654321'),
+    (1, 3, '987654321'),
+    (2, 3, '987654321');
